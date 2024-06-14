@@ -1,7 +1,6 @@
 from django.test import TestCase
 
 # Create your tests here.
-# from django.test import TestCase
 
 from pathlib import Path
 import sys
@@ -10,33 +9,37 @@ from asuan.wsgi import *
 from app.models import *
 
 # LISTAR
-consulta = Cliente.objects.all()
-print(consulta)
+# consulta = Cliente.objects.all()
+# print(consulta)
 
 # -----------------------------------------
-# INSERTAR
-categoria = Categoria(
-    categoria="Bebidas"
-)
-categoria.save()
-consulta = Categoria.objects.all()
-print(consulta)
+# # INSERTAR
+# categoria = Categoria(
+#     categoria="Bebidas"
+# )
+# categoria.save()
+# consulta = Categoria.objects.all()
+# print(consulta)
 
 # -----------------------------------------
 
 # EDITAR
-# c = Tipo.objects.get(id=1)
-# print(c.nombre)
-# c.nombre='docente'
-# c.save()
-# print(c.nombre)
+# cliente = Cliente.objects.get(id=1)
+# print(cliente.nombre)
+# cliente.nombre='Juan'
+# cliente.tipo_documento='TI'
+# cliente.numero_documento= 2131412
+# cliente.email='juanisimo@gmail.com'
+# cliente.telefono=23124122
+# cliente.save()
+# print(cliente.nombre)
 
 # -----------------------------------------
 
 # ELIMINAR
-# c = Tipo.objects.get(id=1)
-# c.delete()
-# consulta = Tipo.objects.all()
+# cliente = Cliente.objects.get(id=2)
+# cliente.delete()
+# consulta = Cliente.objects.all()
 # print(consulta)
 
 # -----------------------------------------
