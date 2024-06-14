@@ -15,16 +15,12 @@ print(consulta)
 
 # -----------------------------------------
 # INSERTAR
-# cliente = Cliente(
-#     nombre='Carlos',
-#     tipo_documento='CC',
-#     numero_documento=785632,
-#     email='carlos@gmail.com',
-#     telefono=84196315
-# )
-# cliente.save()
-# consulta = Cliente.objects.all()
-# print(consulta)
+categoria = Categoria(
+    categoria="Bebidas"
+)
+categoria.save()
+consulta = Categoria.objects.all()
+print(consulta)
 
 # -----------------------------------------
 

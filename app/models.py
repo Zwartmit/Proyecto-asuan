@@ -4,7 +4,7 @@ class Categoria (models.Model):
     categoria = models.CharField(max_length=50, verbose_name="Categoria")
 
     def __str__(self):
-        return self.categoria
+        return f"\nCategoria: {self.categoria}\n\n"
 
     class Meta:
         verbose_name= "categoria"
@@ -18,7 +18,7 @@ class Marca (models.Model):
     marca = models.CharField(max_length=50, verbose_name="Marca")
 
     def __str__(self):
-        return self.marca
+        return f"\nMarca: {self.marca}\n\n"
 
     class Meta:
         verbose_name= "marca"
@@ -31,7 +31,7 @@ class Presentacion (models.Model):
     presentacion = models.CharField(max_length=50, verbose_name="Presentacion")
 
     def __str__(self):
-        return self.presentacion
+        return f"\nPresentación: {self.presentacion}\n\n"
 
     class Meta:
         verbose_name= "presentacion"
@@ -50,7 +50,7 @@ class Producto(models.Model):
     id_presentacion = models.ForeignKey(Presentacion, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.nombre_producto
+        return f"\nProducto: {self.nombre_producto}\nCantidad: {self.cantidad}\nValor: {self.valor}\nEstado: {self.estado}\n\n"
 
     class Meta:
         verbose_name= "producto"
@@ -114,7 +114,7 @@ class Plato(models.Model):
     estado = models.BooleanField(default=True, verbose_name="Estado")
 
     def __str__(self):
-        return self.nombre_plato
+        return f"\nPlato: {self.nombre_plato}\n Descripción: {self.descripcion},\nValor: {self.valor}\nEstado: {self.estado}\n\n"
 
     class Meta:
         verbose_name= "plato"
@@ -132,7 +132,7 @@ class Cuenta(models.Model):
     id_plato = models.ManyToManyField(Plato)
 
     def __str__(self):
-        return self.cantidad
+        return f"\nCantidad: {self.cantidad},\nSubtotal: {self.subtotal}\n Estado: {self.estado}\n\n"
 
     class Meta:
         verbose_name= "cuenta"
@@ -202,7 +202,7 @@ class Venta(models.Model):
     id_producto = models.ManyToManyField(Producto)
 
     def __str__(self):
-        return self.cantidad_producto
+        return f"\nCantidad producto: {self.cantidad_producto}\n Total venta: {self.total_venta}\nTotal venta IVA: {self.total_venta_iva}\nFecha venta: {self.fecha_venta}\n\n"
 
     class Meta:
         verbose_name= "venta"
@@ -220,7 +220,7 @@ class Metodo_pago(models.Model):
     estado = models.BooleanField(default=True, verbose_name="Estado")
 
     def __str__(self):
-        return self.metodo
+        return f"\nMetodo: {self.metodo}\nEstado: {self.estado}\n\n"
 
     class Meta:
         verbose_name= "metodo_pago"
@@ -235,7 +235,7 @@ class Factura(models.Model):
     id_metodo = models.ForeignKey(Metodo_pago, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.fecha_emision_factura
+        return f"\nFecha de emisión factura: {self.fecha_emision_factura}\n\n"
 
     class Meta:
         verbose_name= "factura"
