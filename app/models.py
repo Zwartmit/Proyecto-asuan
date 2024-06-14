@@ -74,7 +74,7 @@ class Mesero(models.Model):
     telefono = models.PositiveIntegerField(verbose_name="Telefono")
 
     def __str__(self):
-        return self.nombre
+        return f"\nNombre: {self.nombre}\nTipo de documento: {self.tipo_documento}\nNúmero de documento: {self.numero_documento}\nEmail: {self.email}\nTeléfono: {self.telefono}\n\n"
 
     class Meta:
         verbose_name= "mesero"
@@ -98,8 +98,8 @@ class Cliente(models.Model):
     telefono = models.PositiveIntegerField(verbose_name="Telefono")
 
     def __str__(self):
-        return self.nombre
-
+        return f"\nNombre: {self.nombre}\nTipo de documento: {self.tipo_documento}\nNúmero de documento: {self.numero_documento}\nEmail: {self.email}\nTeléfono: {self.telefono}\n\n"
+    
     class Meta:
         verbose_name= "cliente"
         verbose_name_plural ='clientes'
@@ -157,7 +157,7 @@ class Administrador(models.Model):
     contraseña = models.CharField(max_length=50,verbose_name="Contraseña")
 
     def __str__(self):
-        return self.nombre
+        return f"\nNombre: {self.nombre}\nTipo de documento: {self.tipo_documento}\nNúmero de documento: {self.numero_documento}\nEmail: {self.email}\nTeléfono: {self.telefono}\nContraseña: {self.contraseña}\n\n"
 
     class Meta:
         verbose_name= "administrador"
@@ -182,7 +182,7 @@ class Operador(models.Model):
     contraseña = models.CharField(max_length=50,verbose_name="Contraseña")
 
     def __str__(self):
-        return self.nombre
+        return f"\nNombre: {self.nombre}\nTipo de documento: {self.tipo_documento}\nNúmero de documento: {self.numero_documento}\nEmail: {self.email}\nTeléfono: {self.telefono}\nContraseña: {self.contraseña}\n\n"
 
     class Meta:
         verbose_name= "operador"
