@@ -1,0 +1,26 @@
+{% extends 'listar.html' %}
+
+{% block columnas %}
+<tr>
+    <th scope="col">id</th>
+    <th scope="col">Marca</th>
+    <th scope="col">Opciones</th>
+</tr>
+{% endblock %}
+
+{% block filas %}
+    {% for m in object_list %}
+    <tr>
+        <td>{{ m.id }}</td>
+        <td>{{ m.marca }}</td>
+        <td>
+            <a href="{% url 'app:marca_editar' m.id %}" class="btn btn-info btn-sm">
+                <i class="fas fa-edit"></i>
+            </a>
+            <a href="{% url 'app:marca_eliminar' m.id %}" class="btn btn-danger btn-sm">
+                <i class="fas fa-trash"></i>
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+ {% endblock %}

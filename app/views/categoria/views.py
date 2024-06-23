@@ -13,7 +13,7 @@ from app.forms import CategoriaForm
 
 def lista_categoria(request):
     nombre = {
-        'titulo': 'Listado de Categorias',
+        'titulo': 'Listado de categorias',
         'categorias': Categoria.objects.all()
     }
     return render(request, 'categoria/listar.html',nombre)
@@ -35,9 +35,9 @@ class CategoriaListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Listado de Categorias'
-        context['entidad'] = 'Categorías'
-        context['listar_url'] = reverse_lazy('app:categoria_crear')
+        context['titulo'] = 'Listado de Categorías'
+        context['entidad'] = 'Listado de Categorías'
+        context['listar_url'] = reverse_lazy('app:categoria_lista')
         context['crear_url'] = reverse_lazy('app:categoria_crear')
         return context
 
@@ -51,9 +51,9 @@ class CategoriaCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Crear categoria'
-        context['clase'] = 'Esta categoría ya existe'
-        context['entidad'] = 'Crear categoria'
+        context['titulo'] = 'Agregar categoría'
+        context['entidad'] = 'Agregar categoría'
+        context['error'] = 'Esta categoría ya existe'
         context['listar_url'] = reverse_lazy('app:categoria_lista')
         return context
     
@@ -63,7 +63,6 @@ class CategoriaCreateView(CreateView):
         if Categoria.objects.filter(categoria__iexact=categoria).exists():
             form.add_error('categoria', 'Ya existe una categoría con este nombre.')
             return self.form_invalid(form)
-        
         return super().form_valid(form)
     
 ###### EDITAR ######
@@ -76,9 +75,9 @@ class CategoriaUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Editar categoria'
-        context['clase'] = 'Esta categoría ya existe'
-        context['entidad'] = 'Categorías'
+        context['titulo'] = 'Editar categoría'
+        context['entidad'] = 'Editar categoría'
+        context['error'] = 'Esta categoría ya existe'
         context['listar_url'] = reverse_lazy('app:categoria_lista')
         return context
     
@@ -88,21 +87,18 @@ class CategoriaUpdateView(UpdateView):
         if Categoria.objects.filter(categoria__iexact=categoria).exists():
             form.add_error('categoria', 'Ya existe una categoría con este nombre.')
             return self.form_invalid(form)
-        
         return super().form_valid(form)
     
 ###### ELIMINAR ######
 
 class CategoriaDeleteView(DeleteView):
     model = Categoria
-    form_class = CategoriaForm
     template_name = 'categoria/eliminar.html'
     success_url = reverse_lazy('app:categoria_lista')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Eliminar categoria'
-        context['clase'] = 'Esta categoría ya existe'
-        context['entidad'] = 'Categorías'
+        context['titulo'] = 'Eliminar categoría'
+        context['entidad'] = 'Eliminar categoría'
         context['listar_url'] = reverse_lazy('app:categoria_lista')
         return context

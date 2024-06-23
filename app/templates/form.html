@@ -11,7 +11,7 @@
         </div>
         <div class="card-body">
             {% csrf_token %}
-            {% if form.errors %}
+            <!-- {% if form.errors %}
             <div class="alert alert-warning alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
                 <h5><i class="icon fas fa-exclamation-triangle"></i> Ha ocurrido un error al intentar guardar la
@@ -24,7 +24,7 @@
                     {% endfor %}
                 </ul>
             </div>
-            {% endif %}
+            {% endif %} -->
             {% for field in form.visible_fields %}
             <div class="form-group">
                 <label for="text">{{ field.label }}:</label>
@@ -43,7 +43,7 @@
     var errors = '';
     {% for field in form %}
     {% for error in field.errors %}
-    errors += '{{ clase }}';
+    errors += '{{ error }}';
     {% endfor %}
     {% endfor %}
 
