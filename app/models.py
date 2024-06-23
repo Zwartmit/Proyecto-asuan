@@ -1,7 +1,7 @@
 from django.db import models
 
 class Categoria (models.Model):
-    categoria = models.CharField(max_length=50, verbose_name="Categoria")
+    categoria = models.CharField(max_length=50, verbose_name="Categoria", unique=True)
 
     def __str__(self):
         return f"\nCategoria: {self.categoria}\n\n"
@@ -15,7 +15,7 @@ class Categoria (models.Model):
     
 
 class Marca (models.Model):
-    marca = models.CharField(max_length=50, verbose_name="Marca")
+    marca = models.CharField(max_length=50, verbose_name="Marca", unique=True)
 
     def __str__(self):
         return f"\nMarca: {self.marca}\n\n"
@@ -28,7 +28,7 @@ class Marca (models.Model):
 ########################################################################################################################################
 
 class Presentacion (models.Model):
-    presentacion = models.CharField(max_length=50, verbose_name="Presentacion")
+    presentacion = models.CharField(max_length=50, verbose_name="Presentacion", unique=True)
 
     def __str__(self):
         return f"\nPresentación: {self.presentacion}\n\n"
@@ -41,7 +41,7 @@ class Presentacion (models.Model):
 ########################################################################################################################################
 
 class Producto(models.Model):
-    nombre_producto = models.CharField(max_length=50, verbose_name="Producto")
+    producto = models.CharField(max_length=50, verbose_name="Producto")
     cantidad = models.PositiveIntegerField(verbose_name="Cantidad")
     valor = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Valor")
     estado = models.BooleanField(default=True, verbose_name="Estado")
@@ -50,7 +50,7 @@ class Producto(models.Model):
     id_presentacion = models.ForeignKey(Presentacion, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"\nProducto: {self.nombre_producto}\nCantidad: {self.cantidad}\nValor: {self.valor}\nEstado: {self.estado}\n\n"
+        return f"\nProducto: {self.producto}\nCantidad: {self.cantidad}\nValor: {self.valor}\nEstado: {self.estado}\n\n"
 
     class Meta:
         verbose_name= "producto"
@@ -60,16 +60,16 @@ class Producto(models.Model):
 ########################################################################################################################################
 
 class Mesero(models.Model):
-    
     class TipoDocumento(models.TextChoices):
         CC = 'CC', 'Cédula de Ciudadanía'
         TI = 'TI', 'Tarjeta de Identidad'
         CE = 'CE', 'Cédula de Extranjería'
         RC = 'RC', 'Registro Civil'
         PSP = 'PSP', 'Pasaporte'
+
     nombre = models.CharField(max_length=50, verbose_name="Nombre")
-    tipo_documento = models.CharField(max_length=3, choices=TipoDocumento.choices, default=TipoDocumento.CC, verbose_name="Tipo_documento")
-    numero_documento = models.PositiveIntegerField(verbose_name="Numero_documento")
+    tipo_documento = models.CharField(max_length=3, choices=TipoDocumento.choices, default=TipoDocumento.CC, verbose_name="Tipo de documento")
+    numero_documento = models.PositiveIntegerField(verbose_name="Numero de documento", unique=True)
     email = models.EmailField(max_length=50, verbose_name="Email")
     telefono = models.PositiveIntegerField(verbose_name="Telefono")
 
@@ -84,16 +84,16 @@ class Mesero(models.Model):
 ########################################################################################################################################
 
 class Cliente(models.Model):
-    
     class TipoDocumento(models.TextChoices):
         CC = 'CC', 'Cédula de Ciudadanía'
         TI = 'TI', 'Tarjeta de Identidad'
         CE = 'CE', 'Cédula de Extranjería'
         RC = 'RC', 'Registro Civil'
         PSP = 'PSP', 'Pasaporte'
+
     nombre = models.CharField(max_length=50, verbose_name="Nombre")
-    tipo_documento = models.CharField(max_length=3, choices=TipoDocumento.choices, default=TipoDocumento.CC, verbose_name="Tipo_documento")
-    numero_documento = models.PositiveIntegerField(verbose_name="Numero_documento")
+    tipo_documento = models.CharField(max_length=3, choices=TipoDocumento.choices, default=TipoDocumento.CC, verbose_name="Tipo de documento")
+    numero_documento = models.PositiveIntegerField(verbose_name="Numero de documento", unique=True)
     email = models.EmailField(max_length=50, verbose_name="Email")
     telefono = models.PositiveIntegerField(verbose_name="Telefono")
 
@@ -142,16 +142,14 @@ class Cuenta(models.Model):
 ########################################################################################################################################
 
 class Administrador(models.Model):
-    
     class TipoDocumento(models.TextChoices):
         CC = 'CC', 'Cédula de Ciudadanía'
-        TI = 'TI', 'Tarjeta de Identidad'
         CE = 'CE', 'Cédula de Extranjería'
-        RC = 'RC', 'Registro Civil'
         PSP = 'PSP', 'Pasaporte'
+
     nombre = models.CharField(max_length=50, verbose_name="Nombre")
-    tipo_documento = models.CharField(max_length=3, choices=TipoDocumento.choices, default=TipoDocumento.CC, verbose_name="Tipo_documento")
-    numero_documento = models.PositiveIntegerField(verbose_name="Numero_documento")
+    tipo_documento = models.CharField(max_length=3, choices=TipoDocumento.choices, default=TipoDocumento.CC, verbose_name="Tipo de documento")
+    numero_documento = models.PositiveIntegerField(verbose_name="Numero de documento", unique=True)
     email = models.EmailField(max_length=50, verbose_name="Email")
     telefono = models.PositiveIntegerField(verbose_name="Telefono")
     contraseña = models.CharField(max_length=50,verbose_name="Contraseña")
@@ -167,16 +165,15 @@ class Administrador(models.Model):
 ########################################################################################################################################
 
 class Operador(models.Model):
-    
     class TipoDocumento(models.TextChoices):
         CC = 'CC', 'Cédula de Ciudadanía'
         TI = 'TI', 'Tarjeta de Identidad'
         CE = 'CE', 'Cédula de Extranjería'
-        RC = 'RC', 'Registro Civil'
         PSP = 'PSP', 'Pasaporte'
+        
     nombre = models.CharField(max_length=50, verbose_name="Nombre")
-    tipo_documento = models.CharField(max_length=3, choices=TipoDocumento.choices, default=TipoDocumento.CC, verbose_name="Tipo_documento")
-    numero_documento = models.PositiveIntegerField(verbose_name="Numero_documento")
+    tipo_documento = models.CharField(max_length=3, choices=TipoDocumento.choices, default=TipoDocumento.CC, verbose_name="Tipo de documento")
+    numero_documento = models.PositiveIntegerField(verbose_name="Numero de documento", unique=True)
     email = models.EmailField(max_length=50, verbose_name="Email")
     telefono = models.PositiveIntegerField(verbose_name="Telefono")
     contraseña = models.CharField(max_length=50,verbose_name="Contraseña")
