@@ -85,7 +85,7 @@ class ProductoForm(ModelForm):
                     "min": 1,
                     "placeholder": "Estado del producto",
                 },
-            ),
+            )
         }
 
 class ClienteForm(ModelForm):
@@ -123,7 +123,7 @@ class ClienteForm(ModelForm):
                     "min": 1,
                     "placeholder": "Teléfono",
                 }
-            ),
+            )
         }
 
 class MeseroForm(ModelForm):
@@ -161,5 +161,39 @@ class MeseroForm(ModelForm):
                     "min": 1,
                     "placeholder": "Teléfono",
                 }
+            )
+        }
+
+class PlatoForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["plato"].widget.attrs["autofocus"] = True
+
+    class Meta:
+        model = Plato
+        fields = "__all__"
+        widgets = {
+            "plato": TextInput(
+                attrs={
+                    "placeholder": "Nombre del plato",
+                }
             ),
+            "descripcion": Textarea(
+                attrs={
+                    "placeholder": "Descripción del plato",
+                }
+            ),
+            "valor": NumberInput(
+                attrs={
+                    "min": 1,
+                    "placeholder": "Valor del plato",
+                }
+            ),
+            "estado": Select(
+                choices=[(True, "Activo"), (False, "Inactivo")],
+                attrs={
+                    "min": 1,
+                    "placeholder": "Estado del plato",
+                },
+            )
         }

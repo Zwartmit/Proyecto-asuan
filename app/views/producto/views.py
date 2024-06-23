@@ -79,7 +79,7 @@ class ProductoUpdateView(UpdateView):
         context['titulo'] = 'Editar producto'
         context['entidad'] = 'Editar producto'
         context['error'] = 'Este producto ya existe'
-        context['listar_url'] = reverse_lazy('app:productoa_lista')
+        context['listar_url'] = reverse_lazy('app:producto_lista')
         return context
     
     def form_valid(self, form):

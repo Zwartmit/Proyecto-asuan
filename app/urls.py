@@ -6,6 +6,7 @@ from app.views.presentacion.views import *
 from app.views.producto.views import *
 from app.views.cliente.views import *
 from app.views.mesero.views import *
+from app.views.plato.views import *
 
 app_name = 'app'
 urlpatterns = [
@@ -44,4 +45,11 @@ urlpatterns = [
     path('mesero/crear/', MeseroCreateView.as_view(), name='mesero_crear'),
     path('mesero/editar/<int:pk>/', MeseroUpdateView.as_view(), name='mesero_editar'),
     path('mesero/eliminar/<int:pk>/', MeseroDeleteView.as_view(), name='mesero_eliminar'),
+
+    ### CRUD PLATO ###
+    path('plato/listar/', PlatoListView.as_view(), name='plato_lista'),
+    path('plato/crear/', PlatoCreateView.as_view(), name='plato_crear'),
+    path('plato/editar/<int:pk>/', PlatoUpdateView.as_view(), name='plato_editar'),
+    path('plato/eliminar/<int:pk>/', PlatoDeleteView.as_view(), name='plato_eliminar'),
+
 ]
