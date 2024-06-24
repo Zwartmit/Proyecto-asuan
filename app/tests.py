@@ -1,7 +1,4 @@
 from django.test import TestCase
-
-# Create your tests here.
-
 from pathlib import Path
 import sys
 sys.path.append(str(Path(__file__).parent.parent))
@@ -15,7 +12,7 @@ from app.models import *
 # -----------------------------------------
 # # INSERTAR
 # categoria = Categoria(
-#     categoria="Bebidas"
+#     categoria="Almuerzos"
 # )
 # categoria.save()
 # consulta = Categoria.objects.all()
