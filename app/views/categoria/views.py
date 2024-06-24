@@ -102,3 +102,5 @@ class CategoriaDeleteView(DeleteView):
         context['entidad'] = 'Eliminar categoría'
         context['listar_url'] = reverse_lazy('app:categoria_lista')
         return context
+    
+    

@@ -82,15 +82,6 @@ class ProductoUpdateView(UpdateView):
         context['listar_url'] = reverse_lazy('app:producto_lista')
         return context
     
-    def form_valid(self, form):
-        producto = form.cleaned_data.get('producto').lower()
-        
-        if Producto.objects.filter(producto__iexact=producto).exists():
-            form.add_error('producto', 'Ya existe un producto con este nombre.')
-            return self.form_invalid(form)
-        
-        return super().form_valid(form)
-    
 ###### ELIMINAR ######
 
 class ProductoDeleteView(DeleteView):

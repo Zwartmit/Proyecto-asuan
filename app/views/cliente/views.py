@@ -57,14 +57,6 @@ class ClienteCreateView(CreateView):
         context['listar_url'] = reverse_lazy('app:cliente_lista')
         return context
     
-    # def form_valid(self, form):
-    #     cliente = form.cleaned_data.get('cliente').lower()
-        
-    #     if Cliente.objects.filter(cliente__iexact=cliente).exists():
-    #         form.add_error('cliente', 'Ya existe un cliente con este nombre.')
-    #         return self.form_invalid(form)
-    #     return super().form_valid(form)
-    
 ###### EDITAR ######
 
 class ClienteUpdateView(UpdateView):
@@ -80,15 +72,7 @@ class ClienteUpdateView(UpdateView):
         context['error'] = 'Este cliente ya está registrad'
         context['listar_url'] = reverse_lazy('app:cliente_lista')
         return context
-    
-    def form_valid(self, form):
-        cliente = form.cleaned_data.get('cliente').lower()
-        
-        if Cliente.objects.filter(cliente__iexact=cliente).exists():
-            form.add_error('cliente', 'Ya existe un cliente con este nombre.')
-            return self.form_invalid(form)
-        return super().form_valid(form)
-    
+
 ###### ELIMINAR ######
 
 class ClienteDeleteView(DeleteView):

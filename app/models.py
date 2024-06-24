@@ -45,9 +45,9 @@ class Producto(models.Model):
     cantidad = models.PositiveIntegerField(verbose_name="Cantidad")
     valor = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Valor")
     estado = models.BooleanField(default=True, verbose_name="Estado")
-    id_categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
-    id_marca = models.ForeignKey(Marca, on_delete=models.CASCADE)
-    id_presentacion = models.ForeignKey(Presentacion, on_delete=models.CASCADE)
+    id_categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT)
+    id_marca = models.ForeignKey(Marca, on_delete=models.PROTECT)
+    id_presentacion = models.ForeignKey(Presentacion, on_delete=models.PROTECT)
 
     def __str__(self):
         return f"\nProducto: {self.producto}\nCantidad: {self.cantidad}\nValor: {self.valor}\nEstado: {self.estado}\n\n"
@@ -93,7 +93,7 @@ class Cliente(models.Model):
 
     nombre = models.CharField(max_length=50, verbose_name="Nombre")
     tipo_documento = models.CharField(max_length=3, choices=TipoDocumento.choices, default=TipoDocumento.CC, verbose_name="Tipo de documento")
-    numero_documento = models.PositiveIntegerField(verbose_name="Número de documento", unique=True)
+    numero_documento = models.PositiveIntegerField(max_length=11, verbose_name="Número de documento", unique=True)
     email = models.EmailField(max_length=50, verbose_name="Email")
     telefono = models.PositiveIntegerField(verbose_name="Teléfono")
 

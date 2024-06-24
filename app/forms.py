@@ -82,7 +82,6 @@ class ProductoForm(ModelForm):
             "estado": Select(
                 choices=[(True, "Activo"), (False, "Inactivo")],
                 attrs={
-                    "min": 1,
                     "placeholder": "Estado del producto",
                 },
             )
@@ -109,7 +108,6 @@ class ClienteForm(ModelForm):
             ),
             "numero_documento": NumberInput(
                 attrs={
-                    "min": 8,
                     "placeholder": "Número de documento",
                 }
             ),
@@ -192,8 +190,34 @@ class PlatoForm(ModelForm):
             "estado": Select(
                 choices=[(True, "Activo"), (False, "Inactivo")],
                 attrs={
-                    "min": 1,
                     "placeholder": "Estado del plato",
+                },
+            )
+        }
+
+class CuentaForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["cantidad"].widget.attrs["autofocus"] = True
+
+    class Meta:
+        model = Cuenta
+        fields = "__all__"
+        widgets = {
+            "cantidad": NumberInput(
+                attrs={
+                    "placeholder": "Cantidad a registrar",
+                }
+            ),
+            "subtotal": NumberInput(
+                attrs={
+                    "placeholder": "Subtotal",
+                }
+            ),
+            "estado": Select(
+                choices=[(True, "Activo"), (False, "Inactivo")],
+                attrs={
+                    "placeholder": "Estado del producto",
                 },
             )
         }
