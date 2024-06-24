@@ -1,0 +1,36 @@
+{% extends 'listar.html' %}
+
+{% block columnas %}
+<tr>
+    <th scope="col">id</th>
+    <th scope="col">Producto</th>
+    <th scope="col">Cantidad</th>
+    <th scope="col">Cuenta</th>
+    <th scope="col">Total</th>
+    <th scope="col">Total IVA</th>
+    <th scope="col">Administrador</th>
+    <th scope="col">Operador</th>
+    <th scope="col">Fecha</th> 
+    <th scope="col">Opciones</th>
+</tr>
+{% endblock %}
+
+{% block filas %}
+    {% for v in object_list %}
+    <tr>
+        <td>{{ v.id }}</td>
+        <td>{{ v.cantidad_producto }}</td>
+        <td>{{ v.total_venta }}</td>
+        <td>{{ v.total_venta_iva }}</td>
+        <td>{{ v.fecha_venta }}</td>
+        <td>
+            <a href="{% url 'app:venta_editar' v.id %}" class="btn btn-info btn-sm">
+                <i class="fas fa-edit"></i>
+            </a>
+            <a href="{% url 'app:venta_eliminar' v.id %}" class="btn btn-danger btn-sm">
+                <i class="fas fa-trash"></i>
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+ {% endblock %}

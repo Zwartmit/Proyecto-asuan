@@ -50,7 +50,7 @@ class Producto(models.Model):
     id_presentacion = models.ForeignKey(Presentacion, on_delete=models.PROTECT)
 
     def __str__(self):
-        return f"\nProducto: {self.producto}\nCantidad: {self.cantidad}\nValor: {self.valor}\nEstado: {self.estado}\n\n"
+        return f"{self.producto}"
 
     class Meta:
         verbose_name= "producto"
@@ -155,7 +155,7 @@ class Administrador(models.Model):
     contraseña = models.CharField(max_length=50,verbose_name="Contraseña")
 
     def __str__(self):
-        return f"\nNombre: {self.nombre}\nTipo de documento: {self.tipo_documento}\nNúmero de documento: {self.numero_documento}\nEmail: {self.email}\nTeléfono: {self.telefono}\nContraseña: {self.contraseña}\n\n"
+        return f"{self.nombre}"
 
     class Meta:
         verbose_name= "administrador"
@@ -179,7 +179,7 @@ class Operador(models.Model):
     contraseña = models.CharField(max_length=50,verbose_name="Contraseña")
 
     def __str__(self):
-        return f"\nNombre: {self.nombre}\nTipo de documento: {self.tipo_documento}\nNúmero de documento: {self.numero_documento}\nEmail: {self.email}\nTeléfono: {self.telefono}\nContraseña: {self.contraseña}\n\n"
+        return f"{self.nombre}"
 
     class Meta:
         verbose_name= "operador"
@@ -187,26 +187,6 @@ class Operador(models.Model):
         db_table ='Operador'
 
 ########################################################################################################################################
-
-class Venta(models.Model):
-    cantidad_producto = models.PositiveIntegerField(verbose_name="Cantidad de productos")
-    total_venta = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Total de la venta")
-    total_venta_iva = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Total de la venta con iva")
-    fecha_venta = models.DateTimeField(null=False, blank=True, verbose_name="Fecha de venta")
-    id_admin = models.ForeignKey(Administrador, on_delete=models.CASCADE)
-    id_operador = models.ForeignKey(Operador, on_delete=models.CASCADE)
-    id_cuenta = models.ForeignKey(Cuenta, on_delete=models.CASCADE)
-    id_producto = models.ManyToManyField(Producto)
-
-    def __str__(self):
-        return f"\nCantidad producto: {self.cantidad_producto}\n Total venta: {self.total_venta}\nTotal venta IVA: {self.total_venta_iva}\nFecha venta: {self.fecha_venta}\n\n"
-
-    class Meta:
-        verbose_name= "venta"
-        verbose_name_plural ='ventas'
-        db_table ='Venta'
-
-########################################################################################################################################        
 
 class Metodo_pago(models.Model):
     
@@ -226,10 +206,30 @@ class Metodo_pago(models.Model):
 
 ########################################################################################################################################
 
+class Venta(models.Model):
+    cantidad_producto = models.PositiveIntegerField(verbose_name="Cantidad de productos")
+    total_venta = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Total de la venta")
+    total_venta_iva = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Total de la venta con iva")
+    fecha_venta = models.DateTimeField(null=False, blank=True, verbose_name="Fecha de venta")
+    id_admin = models.ForeignKey(Administrador, on_delete=models.CASCADE)
+    id_operador = models.ForeignKey(Operador, on_delete=models.CASCADE)
+    id_cuenta = models.ForeignKey(Cuenta, on_delete=models.CASCADE)
+    id_producto = models.ManyToManyField(Producto)
+    id_metodo = models.ForeignKey(Metodo_pago, default='EF', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"\nCantidad producto: {self.cantidad_producto}\n Total venta: {self.total_venta}\nTotal venta IVA: {self.total_venta_iva}\nFecha venta: {self.fecha_venta}\n\n"
+
+    class Meta:
+        verbose_name= "venta"
+        verbose_name_plural ='ventas'
+        db_table ='Venta'
+
+########################################################################################################################################        
+
 class Factura(models.Model):
     fecha_emision_factura = models.DateTimeField(null=False, blank=True, verbose_name="Fecha de emisión de la factura")
     id_venta = models.ForeignKey(Venta, on_delete=models.CASCADE)
-    id_metodo = models.ForeignKey(Metodo_pago, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"\nFecha de emisión factura: {self.fecha_emision_factura}\n\n"
