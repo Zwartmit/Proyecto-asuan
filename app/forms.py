@@ -221,3 +221,79 @@ class CuentaForm(ModelForm):
                 },
             )
         }
+        
+class AdministradorForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["nombre"].widget.attrs["autofocus"] = True
+
+    class Meta:
+        model = Administrador
+        fields = "__all__"
+        widgets = {
+            "nombre": TextInput(
+                attrs={
+                    "placeholder": "Nombre del administrador",
+                }
+            ),
+            "tipo_documento": Select(
+                attrs={
+                    "placeholder": "Tipo de documento",
+                }
+            ),
+            "numero_documento": NumberInput(
+                attrs={
+                    "min": 8,
+                    "placeholder": "Número de documento",
+                }
+            ),
+            "email": EmailInput(
+                attrs={
+                    "placeholder": "Email",
+                }
+            ),
+            "telefono": NumberInput(
+                attrs={
+                    "min": 1,
+                    "placeholder": "Teléfono",
+                }
+            )
+        }
+
+class OperadorForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["nombre"].widget.attrs["autofocus"] = True
+
+    class Meta:
+        model = Operador
+        fields = "__all__"
+        widgets = {
+            "nombre": TextInput(
+                attrs={
+                    "placeholder": "Nombre del operador",
+                }
+            ),
+            "tipo_documento": Select(
+                attrs={
+                    "placeholder": "Tipo de documento",
+                }
+            ),
+            "numero_documento": NumberInput(
+                attrs={
+                    "min": 8,
+                    "placeholder": "Número de documento",
+                }
+            ),
+            "email": EmailInput(
+                attrs={
+                    "placeholder": "Email",
+                }
+            ),
+            "telefono": NumberInput(
+                attrs={
+                    "min": 1,
+                    "placeholder": "Teléfono",
+                }
+            )
+        }

@@ -8,6 +8,8 @@ from app.views.cliente.views import *
 from app.views.mesero.views import *
 from app.views.plato.views import *
 from app.views.cuenta.views import *
+from app.views.administrador.views import *
+from app.views.operador.views import *
 
 app_name = 'app'
 urlpatterns = [
@@ -58,4 +60,16 @@ urlpatterns = [
     path('cuenta/crear/', CuentaCreateView.as_view(), name='cuenta_crear'),
     path('cuenta/editar/<int:pk>/', CuentaUpdateView.as_view(), name='cuenta_editar'),
     path('cuenta/eliminar/<int:pk>/', CuentaDeleteView.as_view(), name='cuenta_eliminar'),
+
+    ### CRUD ADMINISTRADOR ###
+    path('administrador/listar/', AdministradorListView.as_view(), name='administrador_lista'),
+    path('administrador/crear/', AdministradorCreateView.as_view(), name='administrador_crear'),
+    path('administrador/editar/<int:pk>/', AdministradorUpdateView.as_view(), name='administrador_editar'),
+    path('administrador/eliminar/<int:pk>/', AdministradorDeleteView.as_view(), name='administrador_eliminar'),
+
+    ### CRUD OPERADOR ###
+    path('operador/listar/', OperadorListView.as_view(), name='operador_lista'),
+    path('operador/crear/', OperadorCreateView.as_view(), name='operador_crear'),
+    path('operador/editar/<int:pk>/', OperadorUpdateView.as_view(), name='operador_editar'),
+    path('operador/eliminar/<int:pk>/', OperadorDeleteView.as_view(), name='operador_eliminar'),
 ]
