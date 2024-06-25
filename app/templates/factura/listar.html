@@ -18,11 +18,11 @@
     <tr>
         <td>{{ c.id }}</td>
         <td>{{ c.cantidad }}</td>
-        <td>{{ c.id_plato }}</td>
+        <td>{{ c.id_plato | yesno:"Activo,Inactivo" }}</td>
         <td>{{ c.subtotal }}</td>
         <td>{{ c.id_cliente }}</td>
         <td>{{ c.id_mesero }}</td>
-        <td>{{ c.estado | yesno:"Activo,Inactivo" }}</td>
+        <td>{{ c.estado }}</td>
         <td>
             <a href="{% url 'app:cuenta_editar' c.id %}" class="btn btn-info btn-sm">
                 <i class="fas fa-edit"></i>

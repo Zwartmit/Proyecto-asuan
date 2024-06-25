@@ -7,6 +7,7 @@
     <th scope="col">Documento</th>
     <th scope="col"># documento</th>
     <th scope="col">Email</th>
+    <th scope="col">Prefijo</th>
     <th scope="col">Teléfono</th>
     <th scope="col">Opciones</th>
 </tr>
@@ -20,6 +21,7 @@
         <td>{{ c.tipo_documento }}</td>
         <td>{{ c.numero_documento }}</td>
         <td>{{ c.email }}</td>
+        <td>{{ c.pais_telefono }}</td>
         <td>{{ c.telefono }}</td>
         <td>
             <a href="{% url 'app:cliente_editar' c.id %}" class="btn btn-info btn-sm">

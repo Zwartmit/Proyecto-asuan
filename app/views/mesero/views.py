@@ -57,14 +57,6 @@ class MeseroCreateView(CreateView):
         context['listar_url'] = reverse_lazy('app:mesero_lista')
         return context
     
-    def form_valid(self, form):
-        mesero = form.cleaned_data.get('mesero').lower()
-        
-        if Mesero.objects.filter(mesero__iexact=mesero).exists():
-            form.add_error('mesero', 'Ya existe un mesero con este nombre.')
-            return self.form_invalid(form)
-        return super().form_valid(form)
-    
 ###### EDITAR ######
 
 class MeseroUpdateView(UpdateView):
@@ -80,15 +72,7 @@ class MeseroUpdateView(UpdateView):
         context['error'] = 'Esta mesero ya existe'
         context['listar_url'] = reverse_lazy('app:mesero_lista')
         return context
-    
-    def form_valid(self, form):
-        mesero = form.cleaned_data.get('mesero').lower()
-        
-        if Mesero.objects.filter(mesero__iexact=mesero).exists():
-            form.add_error('mesero', 'Ya existe un mesero con este nombre.')
-            return self.form_invalid(form)
-        return super().form_valid(form)
-    
+
 ###### ELIMINAR ######
 
 class MeseroDeleteView(DeleteView):

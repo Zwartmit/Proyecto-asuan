@@ -1,0 +1,34 @@
+{% extends 'listar.html' %}
+
+{% block columnas %}
+<tr>
+    <th scope="col">id</th>
+    <th scope="col">Nombre</th>
+    <th scope="col">Documento</th>
+    <th scope="col"># documento</th>
+    <th scope="col">Email</th>
+    <th scope="col">Teléfono</th>
+    <th scope="col">Opciones</th>
+</tr>
+{% endblock %}
+
+{% block filas %}
+    {% for o in object_list %}
+    <tr>
+        <td>{{ o.id }}</td>
+        <td>{{ o.nombre }}</td>
+        <td>{{ o.tipo_documento }}</td>
+        <td>{{ o.numero_documento }}</td>
+        <td>{{ o.email }}</td>
+        <td>{{ o.telefono }}</td>
+        <td>
+            <a href="{% url 'app:operador_editar' o.id %}" class="btn btn-info btn-sm">
+                <i class="fas fa-edit"></i>
+            </a>
+            <a href="{% url 'app:operador_eliminar' o.id %}" class="btn btn-danger btn-sm">
+                <i class="fas fa-trash"></i>
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+ {% endblock %}
