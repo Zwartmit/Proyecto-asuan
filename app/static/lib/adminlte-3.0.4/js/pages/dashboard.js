@@ -78,7 +78,7 @@ $(function () {
     series           : {
       regions: [{
         values           : visitorsData,
-        scale            : ['#ffffff', '#0154ad'],
+        scale            : ['#495057', '#0154ad'],
         normalizeFunction: 'polynomial'
       }]
     },

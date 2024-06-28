@@ -1,5 +1,5 @@
 import django
-# from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
 import os
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
@@ -24,8 +24,7 @@ class CuentaListView(ListView):
     model = Cuenta
     template_name = 'cuenta/listar.html'
     
-    # @method_decorator(login_required)
-    @method_decorator(csrf_exempt)
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
@@ -49,6 +48,10 @@ class CuentaCreateView(CreateView):
     template_name = 'cuenta/crear.html'
     success_url = reverse_lazy('app:cuenta_lista')
 
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Agregar cuenta'
@@ -65,6 +68,10 @@ class CuentaUpdateView(UpdateView):
     template_name = 'cuenta/crear.html'
     success_url = reverse_lazy('app:cuenta_lista')
 
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Editar cuenta'
@@ -79,6 +86,10 @@ class CuentaDeleteView(DeleteView):
     model = Cuenta
     template_name = 'cuenta/eliminar.html'
     success_url = reverse_lazy('app:cuenta_lista')
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

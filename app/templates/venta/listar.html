@@ -8,6 +8,7 @@
     <th scope="col">Cuenta</th>
     <th scope="col">Total</th>
     <th scope="col">Total IVA</th>
+    <th scope="col">Metodo de pago</th>
     <th scope="col">Administrador</th>
     <th scope="col">Operador</th>
     <th scope="col">Fecha</th> 
@@ -22,6 +23,7 @@
         <td>{{ v.cantidad_producto }}</td>
         <td>{{ v.total_venta }}</td>
         <td>{{ v.total_venta_iva }}</td>
+        <td>{{ v.metodo_pago }}</td>
         <td>{{ v.fecha_venta }}</td>
         <td>
             <a href="{% url 'app:venta_editar' v.id %}" class="btn btn-info btn-sm">

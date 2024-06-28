@@ -1,0 +1,90 @@
+{% load static %}
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Iniciar sesión</title>
+
+    <link rel="stylesheet" href="{% static 'lib/adminlte-3.0.4/plugins/font-awesome-5.11.1/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/adminlte-3.0.4/css/adminlte.min.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
+</head>
+
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <source><img src="{%static 'img/logo_asuan1.png' %}" alt="Asuán">
+            </div>
+            <div class="card-body">
+                <p class="login-box-msg">Iniciar sesión</p>
+                <form action="#" method="post">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        {{ form.username | add_class:'form-control' | attr:'autocomplete:off' | attr:'placeholder:Ingrese su usuario' }}
+                        <!-- <input type="email" class="form-control" placeholder="Correo"> -->
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        {{ form.password | add_class:'form-control' | attr:'autocomplete:off' | attr:'placeholder:Ingrese su contraseña' }}
+                        <!-- <input type="password" class="form-control" placeholder="Contraseña"> -->
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input type="checkbox" id="remember">
+                                <label for="remember">
+                                    Recordarme
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block">Iniciar</button>
+                        </div>
+                    </div>
+                    <script>
+                        {% if form.errors %}
+                        var errors = '';
+                        {% for field in form %}
+                        {% for error in field.errors %}
+                        errors += '{{ error }}';
+                        {% endfor %}
+                        {% endfor %}
+                    
+                        Swal.fire({
+                            title: 'Error!',
+                            text: errors,
+                            icon: 'error',
+                        });
+                        {% endif %}
+                    </script>
+                </form>
+                <p class="mb-1">
+                    <a href="forgot-password.html">Olvidé mi Contraseña</a>
+                </p>
+                <p class="mb-0">
+                    <a href="register.html" class="text-center">Register a new membership</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'lib/adminlte-3.0.4/plugins/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'lib/adminlte-3.0.4/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'lib/adminlte-3.0.4/js/adminlte.min.js' %}"></script>
+</body>
+
+</html>

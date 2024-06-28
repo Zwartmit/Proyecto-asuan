@@ -11,10 +11,10 @@ from app.views.cuenta.views import *
 from app.views.administrador.views import *
 from app.views.operador.views import *
 from app.views.venta.views import *
-from app.views.metodo_pago.views import *
 
 app_name = 'app'
 urlpatterns = [
+    
     ### CRUD CATEGORÍA ###
     path('categoria/listar/', CategoriaListView.as_view(), name='categoria_lista'),
     path('categoria/crear/', CategoriaCreateView.as_view(), name='categoria_crear'),
@@ -80,10 +80,4 @@ urlpatterns = [
     path('venta/crear/', VentaCreateView.as_view(), name='venta_crear'),
     path('venta/editar/<int:pk>/', VentaUpdateView.as_view(), name='venta_editar'),
     path('venta/eliminar/<int:pk>/', VentaDeleteView.as_view(), name='venta_eliminar'),
-
-    ### CRUD METODO DE PAGO ###
-    path('metodo_pago/listar/', Metodo_pagoListView.as_view(), name='metodopago_lista'),
-    path('metodo_pago//crear/', Metodo_pagoCreateView.as_view(), name='metodopago_crear'),
-    path('metodo_pago//editar/<int:pk>/', Metodo_pagoView.as_view(), name='metodopago_editar'),
-    path('metodo_pago//eliminar/<int:pk>/', Metodo_pagoView.as_view(), name='metodopago_eliminar'),
 ]

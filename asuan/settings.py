@@ -39,7 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
-    'app'
+    #apps
+    'app',
+    #dash
+    'dashboard',
+    #index
+    'inicio',
+    #login
+    'login'
 ]
 
 MIDDLEWARE = [
@@ -125,3 +132,6 @@ os.path.join(BASE_DIR / 'static')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = '/dashboard'
+LOGOUT_REDIRECT_URL = '/login/'

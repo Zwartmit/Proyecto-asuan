@@ -47,9 +47,9 @@ class Producto(models.Model):
     cantidad = models.PositiveIntegerField(verbose_name="Cantidad")
     valor = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Valor")
     estado = models.BooleanField(default=True, verbose_name="Estado")
-    id_categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT)
-    id_marca = models.ForeignKey(Marca, on_delete=models.PROTECT)
-    id_presentacion = models.ForeignKey(Presentacion, on_delete=models.PROTECT)
+    id_categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT, verbose_name="Categoría")
+    id_marca = models.ForeignKey(Marca, on_delete=models.PROTECT, verbose_name="Marca")
+    id_presentacion = models.ForeignKey(Presentacion, on_delete=models.PROTECT, verbose_name="Presentación")
 
     def __str__(self):
         return f"{self.producto}"
@@ -183,6 +183,12 @@ class Administrador(models.Model):
             validate_email(value)
         except ValidationError:
             raise ValidationError("Correo rechazado")  
+    
+    def clean_numero_documento(self):
+        numero_documento = self.cleaned_data.get("numero_documento")
+        if Administrador.objects.filter(numero_documento=numero_documento).exists():
+            raise ValidationError("Ya hay un mesero registrado con este número de documento.")
+        return numero_documento
         
     nombre = models.CharField(max_length=50, verbose_name="Nombre")
     tipo_documento = models.CharField(max_length=3, choices=TipoDocumento.choices, default=TipoDocumento.CC, verbose_name="Tipo de documento")
@@ -190,6 +196,12 @@ class Administrador(models.Model):
     email = models.EmailField(max_length=50, verbose_name="Email", validators=[validate_email])
     telefono = models.PositiveIntegerField(verbose_name="Teléfono")
     contraseña = models.CharField(max_length=50,verbose_name="Contraseña")
+    conf_contraseña = models.CharField(max_length=50,verbose_name="Confirmación de contraseña", default="")
+
+    def clean(self):
+        super().clean()
+        if self.contraseña != self.conf_contraseña:
+            raise ValidationError({"conf_contraseña": "Las contraseñas no coinciden"})
 
     def __str__(self):
         return f"{self.nombre}"
@@ -235,17 +247,22 @@ class Operador(models.Model):
         verbose_name_plural ='operadores'
         db_table ='Operador'
 
-########################################################################################################################################
+########################################################################################################################################        
 
 class Venta(models.Model):
+    class MedotoPago(models.TextChoices):
+        EF = 'EF', 'Efectivo'
+        TF = 'TF', 'Transferencia'
+
+    id_producto = models.ManyToManyField(Producto, verbose_name="Producto")
     cantidad_producto = models.PositiveIntegerField(verbose_name="Cantidad de productos")
     total_venta = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Total de la venta")
     total_venta_iva = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Total de la venta con iva")
     fecha_venta = models.DateTimeField(null=False, blank=True, verbose_name="Fecha de venta")
-    id_admin = models.ForeignKey(Administrador, on_delete=models.PROTECT)
-    id_operador = models.ForeignKey(Operador, on_delete=models.PROTECT)
-    id_cuenta = models.ForeignKey(Cuenta, on_delete=models.PROTECT)
-    id_producto = models.ManyToManyField(Producto)
+    metodo_pago = models.CharField(max_length=3, choices=MedotoPago.choices, default=MedotoPago.EF, verbose_name="Metodo de Pago")
+    id_admin = models.ForeignKey(Administrador, on_delete=models.PROTECT, null=True, verbose_name="Administrador")
+    id_operador = models.ForeignKey(Operador, on_delete=models.PROTECT, null=True, verbose_name="Operador")
+    id_cuenta = models.ForeignKey(Cuenta, on_delete=models.PROTECT, verbose_name="Cuenta")
 
     def __str__(self):
         return f"\nCantidad producto: {self.cantidad_producto}\n Total venta: {self.total_venta}\nTotal venta IVA: {self.total_venta_iva}\nFecha venta: {self.fecha_venta}\n\n"
@@ -255,30 +272,11 @@ class Venta(models.Model):
         verbose_name_plural ='ventas'
         db_table ='Venta'
 
-########################################################################################################################################        
-
-class Metodo_pago(models.Model):
-    
-    class MetodoPago(models.TextChoices):
-        EF = 'EF', 'Efectivo'
-        TF = 'TF', 'Transferencia'
-    metodo = models.CharField(max_length=2, choices=MetodoPago.choices, default=MetodoPago.EF, verbose_name="Método")
-    estado = models.BooleanField(default=True, verbose_name="Estado")
-
-    def __str__(self):
-        return f"{self.metodo}"
-
-    class Meta:
-        verbose_name= "metodo_pago"
-        verbose_name_plural ='metodos_pago'
-        db_table ='Metodo_pago'
-
 ########################################################################################################################################
 
 class Factura(models.Model):
     fecha_emision_factura = models.DateTimeField(null=False, blank=True, verbose_name="Fecha de emisión de la factura")
     id_venta = models.ForeignKey(Venta, on_delete=models.PROTECT)
-    id_metodo = models.ForeignKey(Metodo_pago, on_delete=models.PROTECT)
 
     def __str__(self):
         return f"{self.fecha_emision_factura}"

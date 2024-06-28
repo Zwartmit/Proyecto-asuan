@@ -1,5 +1,5 @@
 import django
-# from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
 import os
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
@@ -14,7 +14,7 @@ from app.forms import PlatoForm
 def lista_platos(request):
     nombre = {
         'titulo': 'Listado de platos',
-        'platos': Producto.objects.all()
+        'platos': Plato.objects.all()
     }
     return render(request, 'plato/listar.html',nombre)
 
@@ -24,8 +24,7 @@ class PlatoListView(ListView):
     model = Plato
     template_name = 'plato/listar.html'
     
-    # @method_decorator(login_required)
-    @method_decorator(csrf_exempt)
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
@@ -48,6 +47,10 @@ class PlatoCreateView(CreateView):
     form_class = PlatoForm
     template_name = 'plato/crear.html'
     success_url = reverse_lazy('app:plato_lista')
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -74,6 +77,10 @@ class PlatoUpdateView(UpdateView):
     template_name = 'plato/crear.html'
     success_url = reverse_lazy('app:plato_lista')
 
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Editar plato'
@@ -97,6 +104,10 @@ class PlatoDeleteView(DeleteView):
     model = Plato
     template_name = 'plato/eliminar.html'
     success_url = reverse_lazy('app:plato_lista')
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

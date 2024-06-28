@@ -1,5 +1,6 @@
 from dataclasses import fields
 from django.forms import ModelForm
+from django.core.exceptions import ValidationError
 
 from django import forms
 from django.forms import *
@@ -137,12 +138,6 @@ class MeseroForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["nombre"].widget.attrs["autofocus"] = True
-
-    def clean_numero_documento(self):
-        numero_documento = self.cleaned_data.get("numero_documento")
-        if Cliente.objects.filter(numero_documento=numero_documento).exists():
-            raise ValidationError("Ya hay un mesero registrado con este número de documento.")
-        return numero_documento
             
     class Meta:
         model = Mesero
@@ -239,6 +234,16 @@ class AdministradorForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["nombre"].widget.attrs["autofocus"] = True
+    
+    def clean_password(self):
+        password1 = self.cleaned_data.get("contraseña")
+        password2 = self.cleaned_data.get("conf_contraseña")
+        if not password2:
+            raise forms.ValidationError("Necesitas validar tu contraseña")
+        if password1 != password2:
+            raise forms.ValidationError("Las contraseñas no coinciden")
+        return password2
+
 
     class Meta:
         model = Administrador
@@ -269,6 +274,18 @@ class AdministradorForm(ModelForm):
                 attrs={
                     "min": 1,
                     "placeholder": "Teléfono",
+                }
+            ),
+            "contraseña": PasswordInput(
+                attrs={
+                    "min": 1,
+                    "placeholder": "Contraseña",
+                }
+            ),
+            "conf_contraseña": PasswordInput(
+                attrs={
+                    "min": 1,
+                    "placeholder": "Confirme su contraseña",
                 }
             )
         }
@@ -310,7 +327,7 @@ class OperadorForm(ModelForm):
                 }
             )
         }
-
+ 
 class VentaForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -335,6 +352,11 @@ class VentaForm(ModelForm):
                     "placeholder": "Total IVA",
                 }
             ),
+            "metodo_pago": Select(
+                attrs={
+                    "placeholder": "Metodo de pago",
+                }
+            ),
             "fecha_venta": DateInput(
                 attrs={
                     "type": "date",
@@ -342,25 +364,4 @@ class VentaForm(ModelForm):
                 }
             )
         }
-
-class Metodo_pagoForm(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["metodo"].widget.attrs["autofocus"] = True
-
-    class Meta:
-        model = Metodo_pago
-        fields = "__all__"
-        widgets = {
-            "metodo":Select(
-                attrs={
-                    "placeholder": "Seleccione metodo",
-                }
-            ),
-           "estado": Select(
-                choices=[(True, "Activo"), (False, "Inactivo")],
-                attrs={
-                    "placeholder": "Estado del producto",
-                },
-            )
-        }
+        
